@@ -2,7 +2,7 @@
 #include <map>
 #include <array>
 #include "constants.h"
-#include "Entity.h"
+//#include "Entity.h"
 #include "TransformComponent.h"
 #include "PhysicsComponent.h"
 #include "RenderComponent.h"
@@ -21,40 +21,38 @@ class ComponentArray : public IComponentArray{
         std::array<T, maxEntities> componentArray;
 
         // Map from an entity ID to an index where that entity is in componentArray
-	    std::map<uint8_t, uint8_t> entityIDToArrayIndexMap;
+	    std::map<Entity, uint8_t> entityIDToArrayIndexMap;
 
         // Map from an index in componentArray to the entity ID associated with the component at that index.
-	    std::map<uint8_t, uint8_t> arrayIndexToEntityMap;
+	    std::map<uint8_t, Entity> arrayIndexToEntityMap;
 
         int numComponents;
 
     public:
 
-        void addComponent(Entity e, T component){
+        void addComponent(Entity entity, T component){
             // ------- TODO - make sure entity doesn't already have this component
 
             int newComponentIndex = numComponents;
-            uint8_t entityID = e.getID();
 
             //add component to end of array
             componentArray[newComponentIndex] = component;
             
             //map the entity ID to its index in the componentArray
-            entityIDToArrayIndexMap[entityID] = newComponentIndex;
+            entityIDToArrayIndexMap[entity] = newComponentIndex;
             
             //map the index in componentArray to the corresponding entityID
-            arrayIndexToEntityMap[newComponentIndex] = entityID;
+            arrayIndexToEntityMap[newComponentIndex] = entity;
 
             numComponents++;
 
         }
 
-        void removeComponent(Entity e){
+        void removeComponent(Entity entity){
             // ----- TODO - make sure entity has component in list before removing
 
             //move last element in array to the spot that is being removed to maintain packed array
-            int removedEntityID = e.getID();
-            int indexOfRemovedEntity = entityIDToArrayIndexMap[removedEntityID];
+            int indexOfRemovedEntity = entityIDToArrayIndexMap[entity];
             int lastIndex = numComponents-1;
             componentArray[indexOfRemovedEntity] = componentArray[lastIndex];
 
@@ -67,24 +65,24 @@ class ComponentArray : public IComponentArray{
             arrayIndexToEntityMap[indexOfRemovedEntity] = IDofMovedEntity;
 
             //remove entity from maps
-            entityIDToArrayIndexMap.erase(removedEntityID);
+            entityIDToArrayIndexMap.erase(entity);
             arrayIndexToEntityMap.erase(lastIndex);
 
             numComponents--;
         }
 
-        T& getComponentForEntity(Entity e){
+        T& getComponentForEntity(Entity entity){
             //----- TODO - handle exception for entity not in array
 
-            return componentArray[entityIDToArrayIndexMap.at(e.getID())];
+            return componentArray[entityIDToArrayIndexMap.at(entity)];
         }
 
-        virtual void entityDestroyed(Entity e) override{
+        virtual void entityDestroyed(Entity entity) override{
 
             //check to make sure the component exists, and if so, remove it
-            if(entityIDToArrayIndexMap.find(e.getID()) != entityIDToArrayIndexMap.end())
+            if(entityIDToArrayIndexMap.find(entity) != entityIDToArrayIndexMap.end())
             {
-                removeComponent(e);
+                removeComponent(entity);
             }
         }
 };

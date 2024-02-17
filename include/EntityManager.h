@@ -1,6 +1,7 @@
 #pragma once
 #include <queue>
-#include "Entity.h"
+#include <array>
+//#include "Entity.h"
 #include "constants.h"
 
 
@@ -9,7 +10,13 @@
 class EntityManager{
     private:
         //Entity entities[maxEntities];
-        std::queue<uint8_t> availableIDs;
+        
+        //keep track of available IDs
+        std::queue<Entity> availableIDs;
+
+        //array of signatures where entity ID is the index of its Signature
+        std::array<Signature, maxEntities> entitySignatures{};
+
         uint8_t livingEntityCount;
 
     public:
@@ -17,9 +24,9 @@ class EntityManager{
         ~EntityManager(){};
 
         Entity createEntity();
-        Entity createEntity(Signature sig);
+        //Entity createEntity(Signature sig);
         void deleteEntity(Entity entity);
-        void setSignature(Entity entity, Signature signature){entity.setSignature(signature);};
-        Signature getSignature(Entity entity) const {return entity.getSignature();};
+        void setSignature(Entity entity, Signature signature);
+        Signature getSignature(Entity entity) const;
         uint8_t getLivingEntityCount() const {return livingEntityCount;};
 };

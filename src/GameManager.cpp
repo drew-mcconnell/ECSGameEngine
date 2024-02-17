@@ -29,13 +29,17 @@ void GameManager::Render(SDL_Renderer * renderer){
 }
 
 void GameManager::createPaddles(){
-    int currentIndex = entityManager.getLivingEntityCount();
-    Signature sig1 = Signature(0b111);
-    entities[currentIndex] = entityManager.createEntity(sig1);
-
     componentManager.registerComponent<TransformComponent>();
     componentManager.registerComponent<PhysicsComponent>();
     componentManager.registerComponent<RenderComponent>();
+
+    //make paddle 1
+    int currentIndex = entityManager.getLivingEntityCount();
+    //Signature sig1 = Signature(0b111);
+    entities[currentIndex] = entityManager.createEntity();
+
+    Signature sig1 = componentManager.getComponentSignature<TransformComponent>() | componentManager.getComponentSignature<PhysicsComponent>() | componentManager.getComponentSignature<RenderComponent>();
+    entityManager.setSignature(entities[currentIndex], sig1);
 
     TransformComponent t1;
     t1.x = 20;
@@ -56,14 +60,10 @@ void GameManager::createPaddles(){
     rend1.alpha = 255;
     componentManager.addComponent<RenderComponent>(entities[currentIndex], rend1);
     
-    
-    /*transforms[currentIndex] = t1;
-    physics[currentIndex] = phys1;
-    render[currentIndex] = rend1;*/
-
-    Signature sig2 = Signature(0b111);
+    //make paddle 2
     currentIndex = entityManager.getLivingEntityCount();
-    entities[currentIndex] = entityManager.createEntity(sig2);
+    entities[currentIndex] = entityManager.createEntity();
+    entityManager.setSignature(entities[currentIndex], sig1);
 
     TransformComponent t2;
     t2.x = 800 - 15 - 20;

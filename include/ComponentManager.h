@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
 #include "constants.h"
-#include "Entity.h"
+//#include "Entity.h"
 #include "ComponentArray.h"
 #include "TransformComponent.h"
 #include "PhysicsComponent.h"

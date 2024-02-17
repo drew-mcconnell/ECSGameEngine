@@ -33,12 +33,29 @@ class SystemManager{
         }
 
         void entityDestroyed(Entity entity){
-            
-
+            //go through all systems and erase the entity
+            for(auto & pair : systems){
+                //don't need to check if entity exists because entities is a set
+                pair.second->entities.erase(entity);
+            }
         }
 
         void entitySignatureChanged(Entity entity, Signature entitySignature){
+            //go through all systems and update their entity sets
+            for(auto & pair : systems){
+                auto const & type = pair.first;
+                auto const & system = pair.second;
+                auto const & systemSignature = systemSignatures[type];
 
+                //if entity signature matches the system signature, add it to the system's entity set
+                if((entitySignature & systemSignature) == systemSignature){
+                    system->entities.insert(entity);
+                }
+                //if entity signature doesn't match the system signature, remove it from the system's entity set
+                else{
+                    system->entities.erase(entity);
+                }
+            }
         }
 
 };
