@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/include",
+                "/Library/Frameworks/SDL2.framework/Headers"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
+            ],
+            "cStandard": "c17",
+            "intelliSenseMode": "macos-clang-arm64",
+            "compilerPath": "/usr/bin/clang++",
+            "compilerArgs": [
+                "-I/Library/Frameworks/SDL2.framework/Headers"
+            ],
+            "cppStandard": "c++17"
+        }
+    ],
+    "version": 4
+}
