@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include "constants.h"
+#include "ECSManager.h"
 #include "TransformComponent.h"
 #include "PhysicsComponent.h"
 #include "RenderComponent.h"
@@ -11,18 +12,16 @@ using namespace std;
 
 class GameManager{
     private:
-        EntityManager entityManager;
+        ECSManager ecsManager;
 
         Entity entities[maxEntities];
-
-        ComponentManager componentManager;
 
         /*TransformComponent transforms[maxEntities];
         PhysicsComponent physics[maxEntities];
         RenderComponent render[maxEntities];*/
 
     public:
-        GameManager(){};
+        GameManager();
 
         void createPaddles();
         void deletePaddles();

@@ -3,5 +3,6 @@
 //#include "Entity.h"
 
 class System{
-    std::set<Entity> entities;
-}
+    public:
+        std::set<Entity> entities;
+};
