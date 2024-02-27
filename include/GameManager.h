@@ -7,18 +7,29 @@
 #include "RenderComponent.h"
 #include "EntityManager.h"
 #include "ComponentManager.h"
+#include "BoxRenderSystem.h"
+#include "PhysicsSystem.h"
+#include "InputManager.h"
+#include "InputContext.h"
+#include "Command.h"
 
 using namespace std;
 
 class GameManager{
     private:
-        ECSManager ecsManager;
 
         Entity entities[maxEntities];
+
+        std::shared_ptr<BoxRenderSystem> boxRenderSystem;
+        std::shared_ptr<PhysicsSystem> physicsSystem;
+        
+        std::shared_ptr<InputContext> defaultContext;
+        InputManager inputManager;
 
         /*TransformComponent transforms[maxEntities];
         PhysicsComponent physics[maxEntities];
         RenderComponent render[maxEntities];*/
+
 
     public:
         GameManager();
@@ -26,7 +37,8 @@ class GameManager{
         void createPaddles();
         void deletePaddles();
 
-        void Update();
+        void ProcessInput();
+        void Update(float deltaTime);
         void Render(SDL_Renderer * renderer);
 
 

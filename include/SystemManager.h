@@ -48,7 +48,8 @@ class SystemManager{
                 auto const & systemSignature = systemSignatures[type];
 
                 //if entity signature matches the system signature, add it to the system's entity set
-                if((entitySignature & systemSignature) == systemSignature){
+                //put check to make sure systemSignature is not empty
+                if(((entitySignature & systemSignature) == systemSignature) && (systemSignature != 0b0)){
                     system->entities.insert(entity);
                 }
                 //if entity signature doesn't match the system signature, remove it from the system's entity set

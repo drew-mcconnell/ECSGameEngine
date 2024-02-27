@@ -88,4 +88,8 @@ class ECSManager{
         void setSignature(Signature signature){
             systemManager->setSignature<T>(signature);
         }
+
+        //------ TODO - figure out how to create function to take in types a 
+        //system would like to subscribe to, then get their signatures and 
+        //update the system signature
 };

@@ -3,15 +3,32 @@
 GameManager::GameManager(){
     ecsManager.init();
     //entities = new Entity[maxEntities];
-};
 
-void GameManager::Update(){
+    boxRenderSystem = ecsManager.registerSystem<BoxRenderSystem>();
+    ecsManager.setSignature<BoxRenderSystem>(Signature(0b101));
     
+    physicsSystem = ecsManager.registerSystem<PhysicsSystem>();
+    ecsManager.setSignature<PhysicsSystem>(Signature(0b11));
+
+    //setup default context --- TODO - make a file to read this from on startup
+    defaultContext = ecsManager.registerSystem<InputContext>();
+    ecsManager.setSignature<InputContext>(Signature(0b10));
+    inputManager.addContext(defaultContext);
+};  
+
+void GameManager::ProcessInput(){
+    inputManager.processInput();
+}
+
+void GameManager::Update(float deltaTime){
+
+    physicsSystem->Update(deltaTime);
 }
 
 void GameManager::Render(SDL_Renderer * renderer){
     
-    for(int i = 0; i < ecsManager.getLivingEntityCount(); i++){
+    boxRenderSystem->RenderBoxes(renderer);
+    /*for(int i = 0; i < ecsManager.getLivingEntityCount(); i++){
         // ----- SHOULD BE DONE IN A SYSTEM, BUT WE'RE JUST TESTING HERE ----
         TransformComponent t = ecsManager.getComponent<TransformComponent>(entities[i]);
         SDL_Rect rect1 = {
@@ -23,7 +40,7 @@ void GameManager::Render(SDL_Renderer * renderer){
         RenderComponent r = ecsManager.getComponent<RenderComponent>(entities[i]);
         SDL_SetRenderDrawColor(renderer, r.red, r.green, r.blue, r.alpha);
         SDL_RenderFillRect(renderer, &rect1);
-    }
+    }*/
 }
 
 void GameManager::createPaddles(){
@@ -80,11 +97,8 @@ void GameManager::createPaddles(){
     rend2.blue = 255;
     rend2.alpha = 255;
     ecsManager.addComponent<RenderComponent>(entities[currentIndex], rend2);
-    
-    //componentManager.entityDestroyed(entities[currentIndex-1]);
-    /*transforms[currentIndex] = t2;
-    physics[currentIndex] = phys2;
-    render[currentIndex] = rend2;*/
+
+
 }
 
 void GameManager::deletePaddles(){

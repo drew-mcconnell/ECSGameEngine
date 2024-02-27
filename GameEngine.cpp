@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL.h>
 #include "GameManager.h"
+#include "ECSManager.h"
 
 using namespace std;
 
@@ -8,6 +9,8 @@ const int frameTargetTime = 30;
 int lastFrameTime = 0;
 
 GameManager gameManager;
+
+ECSManager ecsManager;
 
 bool initializeWindow(SDL_Window **window, SDL_Renderer **renderer)
 {
@@ -71,6 +74,8 @@ void processInput(bool *isRunning)
 {
     SDL_Event event;
 
+    gameManager.ProcessInput();
+    
     //process all events in the queue
     while(SDL_PollEvent(&event)){
         switch(event.type){
@@ -111,6 +116,8 @@ void update()
     float deltaTime = (SDL_GetTicks() - lastFrameTime) / 1000.0f; 
 
     lastFrameTime = SDL_GetTicks();
+
+    gameManager.Update(deltaTime);
 }
 
 void render(SDL_Renderer *renderer)
@@ -143,7 +150,10 @@ int main(int argc, char * argv[])
     while(isRunning)
     {
         processInput(&isRunning);
+
+        //-------- TODO - implement fixed update time step with variable rendering
         update();
+
         render(renderer);
     }
 
