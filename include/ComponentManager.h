@@ -6,6 +6,8 @@
 #include "TransformComponent.h"
 #include "PhysicsComponent.h"
 #include "RenderComponent.h"
+#include "Collider.h"
+#include "BoxCollider.h"
 
 class ComponentManager{
     private:

@@ -12,6 +12,9 @@
 #include "InputManager.h"
 #include "InputContext.h"
 #include "Command.h"
+#include "Collider.h"
+#include "BoxCollider.h"
+#include "CircleCollider.h"
 
 using namespace std;
 

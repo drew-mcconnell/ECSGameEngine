@@ -3,16 +3,27 @@
 GameManager::GameManager(){
     ecsManager.init();
     //entities = new Entity[maxEntities];
+    ecsManager.registerComponent<TransformComponent>();
+    ecsManager.registerComponent<PhysicsComponent>();
+    ecsManager.registerComponent<RenderComponent>();
+
+    //----- TODO - make generic for any collider
+    ecsManager.registerComponent<Collider *>();
 
     boxRenderSystem = ecsManager.registerSystem<BoxRenderSystem>();
-    ecsManager.setSignature<BoxRenderSystem>(Signature(0b101));
+    ecsManager.followComponent<BoxRenderSystem, TransformComponent>();
+    ecsManager.followComponent<BoxRenderSystem, RenderComponent>();
     
     physicsSystem = ecsManager.registerSystem<PhysicsSystem>();
-    ecsManager.setSignature<PhysicsSystem>(Signature(0b11));
+    ecsManager.followComponent<PhysicsSystem, TransformComponent>();
+    ecsManager.followComponent<PhysicsSystem, PhysicsComponent>();
+    //----- TODO - make generic for any collider
+    ecsManager.followComponent<PhysicsSystem, Collider *>();
 
     //setup default context --- TODO - make a file to read this from on startup
     defaultContext = ecsManager.registerSystem<InputContext>();
-    ecsManager.setSignature<InputContext>(Signature(0b10));
+    ecsManager.followComponent<InputContext, PhysicsComponent>();
+
     inputManager.addContext(defaultContext);
 };  
 
@@ -44,10 +55,6 @@ void GameManager::Render(SDL_Renderer * renderer){
 }
 
 void GameManager::createPaddles(){
-    
-    ecsManager.registerComponent<TransformComponent>();
-    ecsManager.registerComponent<PhysicsComponent>();
-    ecsManager.registerComponent<RenderComponent>();
 
     //make paddle 1
     int currentIndex = ecsManager.getLivingEntityCount();
@@ -75,6 +82,9 @@ void GameManager::createPaddles(){
     rend1.blue = 0;
     rend1.alpha = 255;
     ecsManager.addComponent<RenderComponent>(entities[currentIndex], rend1);
+
+    BoxCollider *box1 = new BoxCollider(t1);
+    ecsManager.addComponent<Collider *>(entities[currentIndex], box1);
     
     //make paddle 2
     currentIndex = ecsManager.getLivingEntityCount();
@@ -97,8 +107,37 @@ void GameManager::createPaddles(){
     rend2.blue = 255;
     rend2.alpha = 255;
     ecsManager.addComponent<RenderComponent>(entities[currentIndex], rend2);
+    
+    BoxCollider *box2 = new BoxCollider(t2);
+    ecsManager.addComponent<Collider *>(entities[currentIndex], box2);
 
+    //create ball
+    currentIndex = ecsManager.getLivingEntityCount();
+    entities[currentIndex] = ecsManager.createEntity();
 
+    TransformComponent ballTransform;
+    ballTransform.width = 50;
+    ballTransform.height = 50;
+    ballTransform.x = 400 - ballTransform.width / 2;
+    ballTransform.y = 300 - ballTransform.height / 2;
+    ecsManager.addComponent<TransformComponent>(entities[currentIndex], ballTransform);
+
+    PhysicsComponent ballPhysics;
+    ballPhysics.xVelocity = (rand() % 50 + 200);// * (rand() % 1 - ); //randomize direction
+    ballPhysics.yVelocity = rand() % 50 + 50;
+    ecsManager.addComponent<PhysicsComponent>(entities[currentIndex], ballPhysics);
+
+    RenderComponent ballRender;
+    ballRender.red = 255;
+    ballRender.green = 255;
+    ballRender.blue = 255;
+    ballRender.alpha = 255;
+    ecsManager.addComponent<RenderComponent>(entities[currentIndex], ballRender);
+
+    CircleCollider *ballCollider = new CircleCollider(ballTransform);
+    ecsManager.addComponent<Collider *>(entities[currentIndex], ballCollider);
+
+    
 }
 
 void GameManager::deletePaddles(){

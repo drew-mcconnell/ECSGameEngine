@@ -89,6 +89,21 @@ class ECSManager{
             systemManager->setSignature<T>(signature);
         }
 
+        template<typename T>
+        Signature getSignature(){
+            const char * typeName = typeid(T).name();
+            return systemManager->getSignature<T>();
+        }
+
+        //take in a component type and add its signature to the system signature
+        template<typename T, typename C>
+        void followComponent(){
+            Signature currentSig = getSignature<T>();
+            Signature newBit = getComponentSignature<C>();
+            Signature newSig = currentSig | newBit;
+            setSignature<T>(newSig);
+        }
+
         //------ TODO - figure out how to create function to take in types a 
         //system would like to subscribe to, then get their signatures and 
         //update the system signature

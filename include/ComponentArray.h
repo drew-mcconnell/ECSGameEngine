@@ -3,9 +3,9 @@
 #include <array>
 #include "constants.h"
 //#include "Entity.h"
-#include "TransformComponent.h"
-#include "PhysicsComponent.h"
-#include "RenderComponent.h"
+//#include "TransformComponent.h"
+//#include "PhysicsComponent.h"
+//#include "RenderComponent.h"
 
 class IComponentArray
 {

@@ -29,7 +29,13 @@ class SystemManager{
             //------ TODO - make sure system signature doesn't already exist
 
             const char * typeName = typeid(T).name();
-            systemSignatures.insert({typeName, signature});
+            systemSignatures[typeName] = signature;//.insert({typeName, signature});
+        }
+
+        template<typename T>
+        Signature getSignature(){
+            const char * typeName = typeid(T).name();
+            return systemSignatures[typeName];
         }
 
         void entityDestroyed(Entity entity){
