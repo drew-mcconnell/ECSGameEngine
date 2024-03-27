@@ -7,7 +7,8 @@ extern ECSManager ecsManager;
 
 class PhysicsSystem : public System{
     private:
-
+        void updatePositions(float deltaTime);
+        void resolveCollisions(float deltaTime);
 
     public:
         void Update(float deltaTime);
