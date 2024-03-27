@@ -3,5 +3,5 @@
 void StopYMovement::execute(Entity entity){
     auto &physics = ecsManager.getComponent<PhysicsComponent>(entity);
 
-    physics.yVelocity = 0;
+    physics.velocity.setY(0);//yVelocity = 0;
 }

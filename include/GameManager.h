@@ -37,7 +37,9 @@ class GameManager{
     public:
         GameManager();
 
+        void createWalls();
         void createPaddles();
+        void createBalls();
         void deletePaddles();
 
         void ProcessInput();

@@ -60,22 +60,12 @@ void destroyWindow(SDL_Window *window, SDL_Renderer *renderer)
     SDL_Quit();
 }
 
-void setup()
-{
-    //-------- TODO: setup Scene system ------
-
-    gameManager = GameManager();
-    gameManager.createPaddles();
-    //gameManager.deletePaddles();
-    
-}
-
 void processInput(bool *isRunning)
 {
     SDL_Event event;
 
     gameManager.ProcessInput();
-    
+
     //process all events in the queue
     while(SDL_PollEvent(&event)){
         switch(event.type){
@@ -135,6 +125,18 @@ void render(SDL_Renderer *renderer)
     SDL_PumpEvents();
 }
 
+void setup(SDL_Renderer *renderer)
+{
+    //-------- TODO: setup Scene system ------
+
+    //gameManager = GameManager();
+
+    lastFrameTime = SDL_GetTicks();
+    
+    //render starting frame before processing input and updating
+    render(renderer);
+}
+
 int main(int argc, char * argv[])
 {
     cout << "hello" << endl;
@@ -143,9 +145,10 @@ int main(int argc, char * argv[])
     SDL_Renderer * renderer = nullptr;
 
     // ------------ TODO ----------
-    setup();
 
     bool isRunning = initializeWindow(&window, &renderer);
+
+    setup(renderer);
 
     while(isRunning)
     {

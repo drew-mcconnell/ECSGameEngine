@@ -2,8 +2,9 @@
 
 class TransformComponent{
     public:
-        int x;
-        int y;
-        int width;
-        int height;
+        //x and y refer to center of object for collision purposes
+        float x;
+        float y;
+        float width;
+        float height;
 };

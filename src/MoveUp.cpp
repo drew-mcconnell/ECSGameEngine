@@ -3,5 +3,5 @@
 void MoveUp::execute(Entity entity){
     auto &physics = ecsManager.getComponent<PhysicsComponent>(entity);
 
-    physics.yVelocity = -200;
+    physics.velocity.setY(-200);//yVelocity = -200;
 }

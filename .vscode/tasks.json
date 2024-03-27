@@ -8,6 +8,8 @@
                 "-fcolor-diagnostics",
                 "-fansi-escape-codes",
                 "-std=c++20",
+                "-D",
+                "DEBUG",
                 "-g",
                 "${file}",
                 "src/*.cpp",
