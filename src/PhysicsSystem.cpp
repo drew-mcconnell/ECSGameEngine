@@ -56,11 +56,7 @@ void PhysicsSystem::resolveCollisions(float deltaTime){
                 float reversePercentage = 1;//.25;
                 int reverseIteration = 1;
 
-                /*transform.x -= rigidbody.velocity.x * deltaTime;
-                transform.y -= rigidbody.velocity.y * deltaTime;
-
-                otherTransform.x -= otherRigidbody.velocity.x * deltaTime;
-                otherTransform.y -= otherRigidbody.velocity.y * deltaTime;*/
+                //reverse object movements until they don't collide anymore
                 do {
                     //--- TODO - maybe...try to calculate exact impact time and rewind to that point
                     //get walls of each collider
@@ -81,7 +77,7 @@ void PhysicsSystem::resolveCollisions(float deltaTime){
                     otherTransform.x -= otherRigidbody.velocity.x * (deltaTime * reversePercentage);
                     otherTransform.y -= otherRigidbody.velocity.y * (deltaTime * reversePercentage);
                     otherCollider->updatePosition(otherTransform);
-                    //break;
+                    
                     reverseIteration++;
                     //if(reverseIteration > 4) break; //should be a max of 4 because that would undo frame entirely, but break just in case
 
@@ -141,7 +137,6 @@ void PhysicsSystem::resolveCollisions(float deltaTime){
 
                 //solve for k, the scale factor of the impulse to be applied
                 //https://gamemath.com/book/dynamics.html#collision_response
-
                 Vector2 relativeVelocity = otherRigidbody.velocity - rigidbody.velocity;
                 
                 //calculate new velocities for both objects
@@ -161,7 +156,8 @@ void PhysicsSystem::resolveCollisions(float deltaTime){
 
                 otherTransform.x += rigidbody.velocity.x * deltaTime * (reversePercentage * (4 - reverseIteration));
                 otherTransform.y += rigidbody.velocity.y * deltaTime * (reversePercentage * (4 - reverseIteration));
-*/
+                */
+               
                 #ifdef DEBUG
                     if(transform.x > 900 || transform.x < -100 || transform.y < -100 || transform.y > 700){
                         //if transform of either object in collision is absurd

@@ -12,9 +12,9 @@ GameManager::GameManager(){
     //----- TODO - make generic for any collider
     ecsManager.registerComponent<Collider *>();
 
-    boxRenderSystem = ecsManager.registerSystem<BoxRenderSystem>();
-    ecsManager.followComponent<BoxRenderSystem, TransformComponent>();
-    ecsManager.followComponent<BoxRenderSystem, RenderComponent>();
+    renderSystem = ecsManager.registerSystem<RenderSystem>();
+    ecsManager.followComponent<RenderSystem, TransformComponent>();
+    ecsManager.followComponent<RenderSystem, RenderComponent>();
     
     physicsSystem = ecsManager.registerSystem<PhysicsSystem>();
     ecsManager.followComponent<PhysicsSystem, TransformComponent>();
@@ -46,7 +46,7 @@ void GameManager::Update(float deltaTime){
 
 void GameManager::Render(SDL_Renderer * renderer){
     
-    boxRenderSystem->RenderBoxes(renderer);
+    renderSystem->RenderBoxes(renderer);
     /*for(int i = 0; i < ecsManager.getLivingEntityCount(); i++){
         // ----- SHOULD BE DONE IN A SYSTEM, BUT WE'RE JUST TESTING HERE ----
         TransformComponent t = ecsManager.getComponent<TransformComponent>(entities[i]);
@@ -176,10 +176,11 @@ void GameManager::createPaddles(){
     ecsManager.addComponent<PhysicsComponent>(entities[currentIndex], phys1);
     
     RenderComponent rend1;
-    rend1.red = 0;
-    rend1.green = 255;
-    rend1.blue = 0;
-    rend1.alpha = 255;
+    rend1.color.red = 0;
+    rend1.color.green = 255;
+    rend1.color.blue = 0;
+    rend1.color.alpha = 255;
+    rend1.shape = RECT;
     ecsManager.addComponent<RenderComponent>(entities[currentIndex], rend1);
 
     BoxCollider *box1 = new BoxCollider(t1);
@@ -204,10 +205,11 @@ void GameManager::createPaddles(){
     phys2.mass = INFINITY;//FLT_MAX;
     ecsManager.addComponent<PhysicsComponent>(entities[currentIndex], phys2);
     RenderComponent rend2;
-    rend2.red = 0;
-    rend2.green = 0;
-    rend2.blue = 255;
-    rend2.alpha = 255;
+    rend2.color.red = 0;
+    rend2.color.green = 0;
+    rend2.color.blue = 255;
+    rend2.color.alpha = 255;
+    rend2.shape = RECT;
     ecsManager.addComponent<RenderComponent>(entities[currentIndex], rend2);
     
     BoxCollider *box2 = new BoxCollider(t2);
@@ -237,10 +239,11 @@ void GameManager::createBalls(){
         ecsManager.addComponent<PhysicsComponent>(entities[currentIndex], ballPhysics);
 
         RenderComponent ballRender;
-        ballRender.red = 255;
-        ballRender.green = 255;
-        ballRender.blue = 255;
-        ballRender.alpha = 255;
+        ballRender.color.red = 255;
+        ballRender.color.green = 255;
+        ballRender.color.blue = 255;
+        ballRender.color.alpha = 255;
+        ballRender.shape = CIRCLE;
         ecsManager.addComponent<RenderComponent>(entities[currentIndex], ballRender);
 
         CircleCollider *ballCollider = new CircleCollider(ballTransform);

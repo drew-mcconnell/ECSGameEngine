@@ -7,7 +7,7 @@
 #include "RenderComponent.h"
 #include "EntityManager.h"
 #include "ComponentManager.h"
-#include "BoxRenderSystem.h"
+#include "RenderSystem.h"
 #include "PhysicsSystem.h"
 #include "InputManager.h"
 #include "InputContext.h"
@@ -23,7 +23,7 @@ class GameManager{
 
         Entity entities[maxEntities];
 
-        std::shared_ptr<BoxRenderSystem> boxRenderSystem;
+        std::shared_ptr<RenderSystem> renderSystem;
         std::shared_ptr<PhysicsSystem> physicsSystem;
         
         std::shared_ptr<InputContext> defaultContext;

@@ -23,6 +23,10 @@ Vector2 Collider::getCenter() const {
     return Vector2(max.x - (max.x - min.x) / 2, max.y - (max.y - min.y) / 2);
 }
 
+//---- TODO - can I use composition to turn this method into an instance variable
+// that calls a different function based on whether it's a box or a circle?
+// would eliminate the need for virtual functions in Colliders and fix corner circle
+// collision issue
 bool Collider::isColliding(const Collider &other) const{
     
     //if width and height of union are both smaller than 

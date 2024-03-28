@@ -1,9 +1,13 @@
 #pragma once
+#include "RGBA.h"
+
+enum Shapes{
+    RECT,
+    CIRCLE
+};
 
 class RenderComponent{
     public:
-        int red;
-        int green;
-        int blue;
-        int alpha;
+        RGBA color;
+        Shapes shape;
 };

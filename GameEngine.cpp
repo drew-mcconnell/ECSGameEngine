@@ -98,9 +98,9 @@ void update()
     int timeToWait = frameTargetTime - (SDL_GetTicks() - lastFrameTime);
     
     //only delay if the processor is early for the next frame
-    if(timeToWait > 0 && timeToWait <= frameTargetTime){
-        //SDL_Delay(timeToWait);
-    }
+    /*if(timeToWait > 0 && timeToWait <= frameTargetTime){
+        SDL_Delay(timeToWait);
+    }*/ 
 
     //divide time since last frame by 1000ms to calculate distance in pixels per second instead of pixels per frame
     float deltaTime = (SDL_GetTicks() - lastFrameTime) / 1000.0f; 
