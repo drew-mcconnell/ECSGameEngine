@@ -1,5 +1,7 @@
 #pragma once
 #include <SDL.h>
+#include <cmath>
+#include "limits.h"
 #include "constants.h"
 #include "ECSManager.h"
 #include "TransformComponent.h"
@@ -15,6 +17,9 @@
 #include "Collider.h"
 #include "BoxCollider.h"
 #include "CircleCollider.h"
+#include "SceneLoader.h"
+#include "Tag.h"
+
 
 using namespace std;
 

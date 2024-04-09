@@ -8,6 +8,7 @@
 #include "Collider.h"
 #include "BoxCollider.h"
 #include "CircleCollider.h"
+#include "Tag.h"
 
 extern ECSManager ecsManager;
 
@@ -21,8 +22,8 @@ class SceneLoader{
         static RenderComponent readRender(std::ifstream &sceneFile);
         static bool readBoxCollider(std::ifstream &sceneFile);
         static bool readCircleCollider(std::ifstream &sceneFile);
+        static std::string readTag(std::ifstream &sceneFile);
         static void parseObject(std::ifstream &sceneFile, ECSManager &ecsManager, Entity entities[]);
-
     public:
         static void readFile(std::string file, ECSManager &ecsManager, Entity entities[]);
 

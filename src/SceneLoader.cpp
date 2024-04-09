@@ -187,6 +187,13 @@ bool SceneLoader::readCircleCollider(std::ifstream &sceneFile){
     return hasCircleCollider;
 }
 
+std::string SceneLoader::readTag(std::ifstream &sceneFile){
+    std::string text;
+
+    sceneFile >> text;
+    return removeQuotesAndColon(text);
+}
+
 void SceneLoader::parseObject(std::ifstream &sceneFile, ECSManager &ecsManager, Entity entities[]){
     
     std::string text;
@@ -205,41 +212,46 @@ void SceneLoader::parseObject(std::ifstream &sceneFile, ECSManager &ecsManager, 
         //parse into game objects and components
 
         int currentIndex = ecsManager.getLivingEntityCount() - 1;
+        Entity currentEntity = entities[currentIndex];
         
         //get key by removing quotation marks and colon
         std::string key = removeQuotesAndColon(text);
 
         if(key == "transform"){
             TransformComponent t = readTransform(sceneFile);
-            ecsManager.addComponent<TransformComponent>(entities[currentIndex], t);
+            ecsManager.addComponent<TransformComponent>(currentEntity, t);
         }
         else if(key == "rigidbody"){
             PhysicsComponent rb = readRigidbody(sceneFile);
-            ecsManager.addComponent<PhysicsComponent>(entities[currentIndex], rb);
+            ecsManager.addComponent<PhysicsComponent>(currentEntity, rb);
         }
         else if(key == "render"){
             RenderComponent r = readRender(sceneFile);
-            ecsManager.addComponent<RenderComponent>(entities[currentIndex], r);
+            ecsManager.addComponent<RenderComponent>(currentEntity, r);
         }
         else if(key == "boxCollider"){
             bool hasBoxCollider = readBoxCollider(sceneFile);
             if(hasBoxCollider){
-                Entity entity = entities[currentIndex];
                 //get transform associated with entity to use for Collider instantiation
-                TransformComponent t = ecsManager.getComponent<TransformComponent>(entity);
+                TransformComponent t = ecsManager.getComponent<TransformComponent>(currentEntity);
                 BoxCollider *bc = new BoxCollider(t);
-                ecsManager.addComponent<Collider *>(entity, bc);
+                ecsManager.addComponent<Collider *>(currentEntity, bc);
             }
         }
         else if(key == "circleCollider"){
             bool hasCircleCollider = readCircleCollider(sceneFile);
             if(hasCircleCollider){
-                Entity entity = entities[currentIndex];
                 //get transform associated with entity to use for Collider instantiation
-                TransformComponent t = ecsManager.getComponent<TransformComponent>(entity);
+                TransformComponent t = ecsManager.getComponent<TransformComponent>(currentEntity);
                 CircleCollider *cc = new CircleCollider(t);
-                ecsManager.addComponent<Collider *>(entity, cc);
-            }}
+                ecsManager.addComponent<Collider *>(currentEntity, cc);
+            }
+        }
+        else if(key == "tag"){
+            Tag tag;
+            tag.tag = readTag(sceneFile);
+            ecsManager.addComponent<Tag>(currentEntity, tag);
+        }
         //else it's not a component, but a new entity, so create new entity, recurse, and look for components
         else{
             int nextIndex = currentIndex + 1;

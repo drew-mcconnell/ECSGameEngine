@@ -1,5 +1,18 @@
 #include "InputContext.h"
 
+Entity InputContext::getEntityFromTag(std::string tag) const{
+
+    //basic brute force looking for tags, but not that many tags, so performance hit should be minimal
+    for(auto entity : entities){
+        Tag t = ecsManager.getComponent<Tag>(entity);
+        if(t.tag == tag){
+            return entity;
+        }
+    }
+    //return -1 if not found
+    return -1;
+}
+
 InputContext::InputContext(){
 
     //setup default context
@@ -25,6 +38,7 @@ InputContext::InputContext(){
     buttonLeft = &nullC;
     buttonRight = &nullC;
 }
+
 //using a Command pattern to map buttons to actions
 void InputContext::processInput(){
         //pump events into queue before running SDL_PeepEvents
@@ -39,11 +53,13 @@ void InputContext::processInput(){
             case SDL_KEYDOWN:
                 switch(event.key.keysym.sym){
                     case SDLK_UP:{
-                        buttonUpPressed->execute(*entities.find(5));
+                        Entity entity = getEntityFromTag("paddle2");
+                        buttonUpPressed->execute(entity/**entities.find(5)*/);
                         break;
                         }
                     case SDLK_DOWN:{
-                        buttonDownPressed->execute(*entities.find(5));
+                        Entity entity = getEntityFromTag("paddle2");
+                        buttonDownPressed->execute(entity/**entities.find(5)*/);
                         break;
                         }
                     case SDLK_LEFT:{
@@ -55,11 +71,13 @@ void InputContext::processInput(){
                         break;
                     }
                     case SDLK_w:{
-                        buttonWPressed->execute(*entities.find(4));
+                        Entity entity = getEntityFromTag("paddle1");
+                        buttonWPressed->execute(entity/**entities.find(4)*/);
                         break;
                     }
                     case SDLK_s:{
-                        buttonSPressed->execute(*entities.find(4));
+                        Entity entity = getEntityFromTag("paddle1");
+                        buttonSPressed->execute(entity/**entities.find(4)*/);
                         break;
                     }
                     case SDLK_a:{
@@ -75,11 +93,13 @@ void InputContext::processInput(){
             case SDL_KEYUP:
                 switch(event.key.keysym.sym){
                     case SDLK_UP:{
-                        buttonUpReleased->execute(*entities.find(5));
+                        Entity entity = getEntityFromTag("paddle2");
+                        buttonUpReleased->execute(entity/**entities.find(5)*/);
                         break;
                         }
                     case SDLK_DOWN:{
-                        buttonDownReleased->execute(*entities.find(5));
+                        Entity entity = getEntityFromTag("paddle2");
+                        buttonDownReleased->execute(entity/**entities.find(5)*/);
                         break;
                         }
                     case SDLK_LEFT:{
@@ -91,11 +111,13 @@ void InputContext::processInput(){
                         break;
                     }
                     case SDLK_w:{
-                        buttonWReleased->execute(*entities.find(4));
+                        Entity entity = getEntityFromTag("paddle1");
+                        buttonWReleased->execute(entity/**entities.find(4)*/);
                         break;
                     }
                     case SDLK_s:{
-                        buttonSReleased->execute(*entities.find(4));
+                        Entity entity = getEntityFromTag("paddle1");
+                        buttonSReleased->execute(entity/**entities.find(4)*/);
                         break;
                     }
                     case SDLK_a:{

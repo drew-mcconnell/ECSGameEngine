@@ -84,7 +84,8 @@
         "alpha": 255,
         "shape": "RECT"
       },
-      "boxCollider": true
+      "boxCollider": true,
+      "tag": "paddle1"
     },
     "rightPaddle": {
       "transform": {
@@ -107,7 +108,8 @@
         "alpha": 255,
         "shape": "RECT"
       },
-      "boxCollider": true
+      "boxCollider": true,
+      "tag": "paddle2"
     },
     "ball": {
       "transform": {
@@ -130,6 +132,7 @@
         "alpha": 255,
         "shape": "CIRCLE"
       },
-      "circleCollider": true
+      "circleCollider": true,
+      "tag": "ball"
     }
   }

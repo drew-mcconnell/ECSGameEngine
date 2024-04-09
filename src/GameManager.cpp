@@ -1,7 +1,4 @@
 #include "GameManager.h"
-#include "limits.h"
-#include <cmath>
-#include "SceneLoader.h"
 
 GameManager::GameManager(){
     ecsManager.init();
@@ -9,6 +6,8 @@ GameManager::GameManager(){
     ecsManager.registerComponent<TransformComponent>();
     ecsManager.registerComponent<PhysicsComponent>();
     ecsManager.registerComponent<RenderComponent>();
+    ecsManager.registerComponent<Tag>();
+
     //----- TODO - handle deletion of Collider *s - should gameManager or scene keep array of Collider *s?
     ecsManager.registerComponent<Collider *>();
 
@@ -24,6 +23,7 @@ GameManager::GameManager(){
     //setup default context --- TODO - make a file to read this from on startup
     defaultContext = ecsManager.registerSystem<InputContext>();
     ecsManager.followComponent<InputContext, PhysicsComponent>();
+    ecsManager.followComponent<InputContext, Tag>();
 
     inputManager.addContext(defaultContext);
 

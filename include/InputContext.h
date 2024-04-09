@@ -2,6 +2,7 @@
 #include "SDL.h"
 #include "System.h"
 #include "Command.h"
+#include "Tag.h"
 
 // ---- TODO - MOVE THIS OUT!!! JUST FOR TESTING
 #include "MoveUp.h"
@@ -36,6 +37,8 @@ class InputContext : public System{
 
     public:
         InputContext();
+
+        Entity getEntityFromTag(std::string tag) const;
         virtual void processInput();
 
         void setW(Command * w){buttonWPressed = w;};
