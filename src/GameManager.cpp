@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "limits.h"
 #include <cmath>
+#include "SceneLoader.h"
 
 GameManager::GameManager(){
     ecsManager.init();
@@ -8,8 +9,7 @@ GameManager::GameManager(){
     ecsManager.registerComponent<TransformComponent>();
     ecsManager.registerComponent<PhysicsComponent>();
     ecsManager.registerComponent<RenderComponent>();
-
-    //----- TODO - make generic for any collider
+    //----- TODO - handle deletion of Collider *s - should gameManager or scene keep array of Collider *s?
     ecsManager.registerComponent<Collider *>();
 
     renderSystem = ecsManager.registerSystem<RenderSystem>();
@@ -19,7 +19,6 @@ GameManager::GameManager(){
     physicsSystem = ecsManager.registerSystem<PhysicsSystem>();
     ecsManager.followComponent<PhysicsSystem, TransformComponent>();
     ecsManager.followComponent<PhysicsSystem, PhysicsComponent>();
-    //----- TODO - make generic for any collider
     ecsManager.followComponent<PhysicsSystem, Collider *>();
 
     //setup default context --- TODO - make a file to read this from on startup
@@ -28,9 +27,12 @@ GameManager::GameManager(){
 
     inputManager.addContext(defaultContext);
 
-    createPaddles();
-    createWalls();
-    createBalls();
+    SceneLoader sceneLoader;
+    sceneLoader.readFile("scene1.json", ecsManager, entities);
+
+    //createPaddles();
+    //createWalls();
+    //createBalls();
 
 
 };  
@@ -46,20 +48,7 @@ void GameManager::Update(float deltaTime){
 
 void GameManager::Render(SDL_Renderer * renderer){
     
-    renderSystem->RenderBoxes(renderer);
-    /*for(int i = 0; i < ecsManager.getLivingEntityCount(); i++){
-        // ----- SHOULD BE DONE IN A SYSTEM, BUT WE'RE JUST TESTING HERE ----
-        TransformComponent t = ecsManager.getComponent<TransformComponent>(entities[i]);
-        SDL_Rect rect1 = {
-        t.x,
-        t.y,
-        t.width,
-        t.height
-        };
-        RenderComponent r = ecsManager.getComponent<RenderComponent>(entities[i]);
-        SDL_SetRenderDrawColor(renderer, r.red, r.green, r.blue, r.alpha);
-        SDL_RenderFillRect(renderer, &rect1);
-    }*/
+    renderSystem->Render(renderer);
 }
 
 void GameManager::createWalls(){

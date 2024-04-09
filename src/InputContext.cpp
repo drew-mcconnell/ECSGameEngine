@@ -39,11 +39,11 @@ void InputContext::processInput(){
             case SDL_KEYDOWN:
                 switch(event.key.keysym.sym){
                     case SDLK_UP:{
-                        buttonUpPressed->execute(*entities.find(1));
+                        buttonUpPressed->execute(*entities.find(5));
                         break;
                         }
                     case SDLK_DOWN:{
-                        buttonDownPressed->execute(*entities.find(1));
+                        buttonDownPressed->execute(*entities.find(5));
                         break;
                         }
                     case SDLK_LEFT:{
@@ -55,11 +55,11 @@ void InputContext::processInput(){
                         break;
                     }
                     case SDLK_w:{
-                        buttonWPressed->execute(*entities.find(0));
+                        buttonWPressed->execute(*entities.find(4));
                         break;
                     }
                     case SDLK_s:{
-                        buttonSPressed->execute(*entities.find(0));
+                        buttonSPressed->execute(*entities.find(4));
                         break;
                     }
                     case SDLK_a:{
@@ -75,11 +75,11 @@ void InputContext::processInput(){
             case SDL_KEYUP:
                 switch(event.key.keysym.sym){
                     case SDLK_UP:{
-                        buttonUpReleased->execute(*entities.find(1));
+                        buttonUpReleased->execute(*entities.find(5));
                         break;
                         }
                     case SDLK_DOWN:{
-                        buttonDownReleased->execute(*entities.find(1));
+                        buttonDownReleased->execute(*entities.find(5));
                         break;
                         }
                     case SDLK_LEFT:{
@@ -91,11 +91,11 @@ void InputContext::processInput(){
                         break;
                     }
                     case SDLK_w:{
-                        buttonWReleased->execute(*entities.find(0));
+                        buttonWReleased->execute(*entities.find(4));
                         break;
                     }
                     case SDLK_s:{
-                        buttonSReleased->execute(*entities.find(0));
+                        buttonSReleased->execute(*entities.find(4));
                         break;
                     }
                     case SDLK_a:{

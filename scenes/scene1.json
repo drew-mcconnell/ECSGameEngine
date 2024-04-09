@@ -1,0 +1,135 @@
+{
+    "leftWall": {
+      "transform": {
+        "width": 30,
+        "height": 600,
+        "x": -15,
+        "y": 300
+      },
+      "rigidbody": {
+        "velocityX": 0,
+        "velocityY": 0,
+        "isKinematic": true,
+        "elasticity": 0,
+        "mass": "INFINITY"
+      },
+      "boxCollider": true
+    },
+    "rightWall": {
+      "transform": {
+        "width": 30,
+        "height": 600,
+        "x": 815,
+        "y": 300
+      },
+      "rigidbody": {
+        "velocityX": 0,
+        "velocityY": 0,
+        "isKinematic": true,
+        "elasticity": 0,
+        "mass": "INFINITY"
+      },
+      "boxCollider": true
+    },
+    "topWall": {
+      "transform": {
+        "width": 800,
+        "height": 30,
+        "x": 400,
+        "y": -15
+      },
+      "rigidbody": {
+        "velocityX": 0,
+        "velocityY": 0,
+        "isKinematic": true,
+        "elasticity": 0,
+        "mass": "INFINITY"
+      },
+      "boxCollider": true
+    },
+    "bottomWall": {
+      "transform": {
+        "width": 800,
+        "height": 30,
+        "x": 400,
+        "y": 615
+      },
+      "rigidbody": {
+        "velocityX": 0,
+        "velocityY": 0,
+        "isKinematic": true,
+        "elasticity": 0,
+        "mass": "INFINITY"
+      },
+      "boxCollider": true
+    },
+    "leftPaddle": {
+      "transform": {
+        "width": 15,
+        "height": 100,
+        "x": 27,
+        "y": 70
+      },
+      "rigidbody": {
+        "velocityX": 0,
+        "velocityY": 0,
+        "isKinematic": true,
+        "elasticity": 0,
+        "mass": "INFINITY"
+      },
+      "render": {
+        "red": 0,
+        "green": 255,
+        "blue": 0,
+        "alpha": 255,
+        "shape": "RECT"
+      },
+      "boxCollider": true
+    },
+    "rightPaddle": {
+      "transform": {
+        "width": 15,
+        "height": 100,
+        "x": 773,
+        "y": 70
+      },
+      "rigidbody": {
+        "velocityX": 0,
+        "velocityY": 0,
+        "isKinematic": true,
+        "elasticity": 0,
+        "mass": "INFINITY"
+      },
+      "render": {
+        "red": 0,
+        "green": 0,
+        "blue": 255,
+        "alpha": 255,
+        "shape": "RECT"
+      },
+      "boxCollider": true
+    },
+    "ball": {
+      "transform": {
+        "width": 50,
+        "height": 50,
+        "x": 400,
+        "y": 300
+      },
+      "rigidbody": {
+        "velocityX": 200,
+        "velocityY": 50,
+        "isKinematic": false,
+        "elasticity": 1,
+        "mass": 1
+      },
+      "render": {
+        "red": 255,
+        "green": 255,
+        "blue": 255,
+        "alpha": 255,
+        "shape": "CIRCLE"
+      },
+      "circleCollider": true
+    }
+  }

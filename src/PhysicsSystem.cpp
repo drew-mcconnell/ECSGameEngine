@@ -79,7 +79,7 @@ void PhysicsSystem::resolveCollisions(float deltaTime){
                     otherCollider->updatePosition(otherTransform);
                     
                     reverseIteration++;
-                    //if(reverseIteration > 4) break; //should be a max of 4 because that would undo frame entirely, but break just in case
+                    if(reverseIteration > 4) break; //should be a max of 4 because that would undo frame entirely, but break just in case
 
                 } while(collider->isColliding(*otherCollider));
                 

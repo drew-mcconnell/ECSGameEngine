@@ -30,6 +30,13 @@ class ComponentArray : public IComponentArray{
 
     public:
 
+        ~IComponentArray(){
+            //--- TODO - free memory from Component pointers
+            for(auto entity : componentArray){
+                //delete entity;
+            }
+        }
+
         void addComponent(Entity entity, T component){
             // ------- TODO - make sure entity doesn't already have this component
 

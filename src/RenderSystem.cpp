@@ -1,6 +1,6 @@
 #include "RenderSystem.h"
 
-void RenderSystem::RenderBoxes(SDL_Renderer * renderer){
+void RenderSystem::Render(SDL_Renderer * renderer){
     for(auto const &entity : entities){
         auto &transform = ecsManager.getComponent<TransformComponent>(entity);
         auto &render = ecsManager.getComponent<RenderComponent>(entity);

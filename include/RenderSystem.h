@@ -11,7 +11,7 @@ class RenderSystem : public System{
 
 
     public:
-        void RenderBoxes(SDL_Renderer * renderer);
+        void Render(SDL_Renderer * renderer);
         void DrawRect(SDL_Renderer * renderer, TransformComponent transform, RenderComponent render);
         void DrawCircle(SDL_Renderer * renderer, TransformComponent transform, RenderComponent render);
         void SDL_RenderFillCircle(SDL_Renderer * renderer, TransformComponent transform, RenderComponent render);

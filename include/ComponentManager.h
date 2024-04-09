@@ -32,6 +32,7 @@ class ComponentManager{
 
     public:
         ComponentManager(){nextComponentSignature = Signature(0b1);}
+        //~ComponentManager(){}
 
         template<typename T>
         void registerComponent(){
