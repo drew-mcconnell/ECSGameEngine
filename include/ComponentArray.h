@@ -78,8 +78,15 @@ class ComponentArray : public IComponentArray{
             numComponents--;
         }
 
+        bool doesEntityHaveComponent(Entity entity){
+            return entityIDToArrayIndexMap.find(entity) != entityIDToArrayIndexMap.end();
+        }
+
         T& getComponentForEntity(Entity entity){
             //----- TODO - handle exception for entity not in array
+            /*if(entityIDToArrayIndexMap.find(entity) == entityIDToArrayIndexMap.end()){
+                //return nullptr;
+            }*/
 
             return componentArray[entityIDToArrayIndexMap.at(entity)];
         }

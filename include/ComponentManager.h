@@ -1,13 +1,8 @@
 #pragma once
 #include <map>
 #include "constants.h"
-//#include "Entity.h"
 #include "ComponentArray.h"
-#include "TransformComponent.h"
-#include "PhysicsComponent.h"
-#include "RenderComponent.h"
-#include "Collider.h"
-#include "BoxCollider.h"
+#include "ComponentTypes.h"
 
 class ComponentManager{
     private:
@@ -65,6 +60,11 @@ class ComponentManager{
         template<typename T>
 	    void removeComponent(Entity entity){
             getComponentArray<T>()->removeComponent(entity);
+        }
+
+        template<typename T>
+        bool doesEntityHaveComponent(Entity entity){
+            return getComponentArray<T>()->doesEntityHaveComponent(entity);
         }
 
         template<typename T>

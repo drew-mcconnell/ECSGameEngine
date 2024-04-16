@@ -146,10 +146,11 @@ RenderComponent SceneLoader::readRender(std::ifstream &sceneFile){
             r.color.alpha = std::stof(num);
         }
         else if(text == "shape"){
+            //int shape;
             std::string shape;
             sceneFile >> shape;
             shape = removeQuotesAndColon(shape);
-
+            //r.shape = static_cast<Shapes>(shape);
             if(shape == "CIRCLE"){
                 r.shape = CIRCLE;
             }

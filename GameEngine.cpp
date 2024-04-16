@@ -12,6 +12,10 @@ GameManager gameManager;
 
 ECSManager ecsManager;
 
+void updateLastFrameTime(){
+    lastFrameTime = SDL_GetTicks();
+}
+
 bool initializeWindow(SDL_Window **window, SDL_Renderer **renderer)
 {
     //initialize SDL
@@ -60,7 +64,7 @@ void destroyWindow(SDL_Window *window, SDL_Renderer *renderer)
     SDL_Quit();
 }
 
-void processInput(bool *isRunning)
+void processInput(bool &isRunning, bool &paused)
 {
     SDL_Event event;
 
@@ -70,7 +74,8 @@ void processInput(bool *isRunning)
     while(SDL_PollEvent(&event)){
         switch(event.type){
             case SDL_QUIT: //event from pressing the "X" button of the window
-                *isRunning = false;
+                isRunning = false;
+                gameManager.saveScene();
                 break;
             case SDL_MOUSEBUTTONDOWN:
                 if(event.button.button == SDL_BUTTON_LEFT){
@@ -80,9 +85,16 @@ void processInput(bool *isRunning)
             case SDL_KEYDOWN:
                 switch(event.key.keysym.sym){
                     case SDLK_ESCAPE:{
-                        *isRunning = false;
+                        isRunning = false;
+                        gameManager.saveScene();
                         break;
                         }
+                    case SDLK_p:{
+                        paused = !paused;
+                        if(!paused){
+                            updateLastFrameTime();
+                        }
+                    }
                     default:
                         //playerInput.Update(&player);
                         break;
@@ -95,6 +107,8 @@ void update()
 {
     //----------- should I even cap the frame rate? Seems like it would be more efficient for the system as a whole if I only executed at a certain FPS
     //wait until elapsed time for correct FPS has been reached
+    //updateLastFrameTime();
+
     int timeToWait = frameTargetTime - (SDL_GetTicks() - lastFrameTime);
     
     //only delay if the processor is early for the next frame
@@ -105,7 +119,7 @@ void update()
     //divide time since last frame by 1000ms to calculate distance in pixels per second instead of pixels per frame
     float deltaTime = (SDL_GetTicks() - lastFrameTime) / 1000.0f; 
 
-    lastFrameTime = SDL_GetTicks();
+    updateLastFrameTime();
 
     gameManager.Update(deltaTime);
 }
@@ -131,7 +145,7 @@ void setup(SDL_Renderer *renderer)
 
     //gameManager = GameManager();
 
-    lastFrameTime = SDL_GetTicks();
+    updateLastFrameTime();
     
     //render starting frame before processing input and updating
     render(renderer);
@@ -147,17 +161,20 @@ int main(int argc, char * argv[])
     // ------------ TODO ----------
 
     bool isRunning = initializeWindow(&window, &renderer);
+    bool paused = false;
 
     setup(renderer);
 
     while(isRunning)
     {
-        processInput(&isRunning);
+        processInput(isRunning, paused);
 
         //-------- TODO - implement fixed update time step with variable rendering
-        update();
+        if(!paused){
+            update();
 
-        render(renderer);
+            render(renderer);
+        }
     }
 
     //SDL_Delay(3000);

@@ -41,7 +41,7 @@ InputContext::InputContext(){
 
 //using a Command pattern to map buttons to actions
 void InputContext::processInput(){
-        //pump events into queue before running SDL_PeepEvents
+    //pump events into queue before running SDL_PeepEvents
     SDL_PumpEvents();
     
     SDL_Event events[10];
@@ -54,12 +54,12 @@ void InputContext::processInput(){
                 switch(event.key.keysym.sym){
                     case SDLK_UP:{
                         Entity entity = getEntityFromTag("paddle2");
-                        buttonUpPressed->execute(entity/**entities.find(5)*/);
+                        buttonUpPressed->execute(entity);
                         break;
                         }
                     case SDLK_DOWN:{
                         Entity entity = getEntityFromTag("paddle2");
-                        buttonDownPressed->execute(entity/**entities.find(5)*/);
+                        buttonDownPressed->execute(entity);
                         break;
                         }
                     case SDLK_LEFT:{
@@ -72,12 +72,12 @@ void InputContext::processInput(){
                     }
                     case SDLK_w:{
                         Entity entity = getEntityFromTag("paddle1");
-                        buttonWPressed->execute(entity/**entities.find(4)*/);
+                        buttonWPressed->execute(entity);
                         break;
                     }
                     case SDLK_s:{
                         Entity entity = getEntityFromTag("paddle1");
-                        buttonSPressed->execute(entity/**entities.find(4)*/);
+                        buttonSPressed->execute(entity);
                         break;
                     }
                     case SDLK_a:{
@@ -94,12 +94,12 @@ void InputContext::processInput(){
                 switch(event.key.keysym.sym){
                     case SDLK_UP:{
                         Entity entity = getEntityFromTag("paddle2");
-                        buttonUpReleased->execute(entity/**entities.find(5)*/);
+                        buttonUpReleased->execute(entity);
                         break;
                         }
                     case SDLK_DOWN:{
                         Entity entity = getEntityFromTag("paddle2");
-                        buttonDownReleased->execute(entity/**entities.find(5)*/);
+                        buttonDownReleased->execute(entity);
                         break;
                         }
                     case SDLK_LEFT:{
@@ -112,12 +112,12 @@ void InputContext::processInput(){
                     }
                     case SDLK_w:{
                         Entity entity = getEntityFromTag("paddle1");
-                        buttonWReleased->execute(entity/**entities.find(4)*/);
+                        buttonWReleased->execute(entity);
                         break;
                     }
                     case SDLK_s:{
                         Entity entity = getEntityFromTag("paddle1");
-                        buttonSReleased->execute(entity/**entities.find(4)*/);
+                        buttonSReleased->execute(entity);
                         break;
                     }
                     case SDLK_a:{

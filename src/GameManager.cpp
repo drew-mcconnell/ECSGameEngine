@@ -28,7 +28,7 @@ GameManager::GameManager(){
     inputManager.addContext(defaultContext);
 
     SceneLoader sceneLoader;
-    sceneLoader.readFile("scene1.json", ecsManager, entities);
+    sceneLoader.readFile("scene1copy.json", ecsManager, entities);
 
     //createPaddles();
     //createWalls();
@@ -243,4 +243,9 @@ void GameManager::createBalls(){
 void GameManager::deletePaddles(){
     ecsManager.deleteEntity(entities[0]);
     ecsManager.deleteEntity(entities[1]);
+}
+
+void GameManager::saveScene(){
+    SceneSaver sceneSaver;
+    sceneSaver.writeFile("scene1copy.json", ecsManager, entities, ecsManager.getLivingEntityCount());
 }

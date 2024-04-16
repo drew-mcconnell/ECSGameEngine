@@ -1,6 +1,6 @@
 #pragma once
-#include "System.h"
 #include <SDL.h>
+#include "System.h"
 #include "ECSManager.h"
 #include "constants.h"
 

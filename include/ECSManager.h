@@ -74,6 +74,11 @@ class ECSManager{
         }
 
         template<typename T>
+        bool doesEntityHaveComponent(Entity entity){
+            return componentManager->doesEntityHaveComponent<T>(entity);
+        }
+
+        template<typename T>
         T& getComponent(Entity entity){
             return componentManager->getComponent<T>(entity);
         }
