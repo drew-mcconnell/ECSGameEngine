@@ -133,6 +133,7 @@
         "shape": "CIRCLE"
       },
       "circleCollider": true,
-      "tag": "ball"
+      "tag": "ball",
+      "script": "src/test.lua"
     }
   }

@@ -5,7 +5,9 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "${workspaceFolder}/include",
-                "/Library/Frameworks/SDL2.framework/Headers"
+                "/Library/Frameworks/SDL2.framework/Headers",
+                "${workspaceFolder}/libraries/lua-5.4.6/install/include",
+                "${workspaceFolder}/libraries/sol2/include/"
             ],
             "defines": [],
             "macFrameworkPath": [

@@ -1,12 +1,25 @@
 #include "GameManager.h"
+#include "sol/sol.hpp"
 
 GameManager::GameManager(){
     ecsManager.init();
+
+    sol::state lua;
+	lua.open_libraries(sol::lib::base);
+
+    lua.script_file("src/test.lua");
+    int x = lua["f"](30);
+    auto myFunc = lua["f"];
+    int value = myFunc(12);
+
+	//lua.script("print('bark bark bark!')");
+
     //entities = new Entity[maxEntities];
     ecsManager.registerComponent<TransformComponent>();
     ecsManager.registerComponent<PhysicsComponent>();
     ecsManager.registerComponent<RenderComponent>();
     ecsManager.registerComponent<Tag>();
+    ecsManager.registerComponent<Script>();
 
     //----- TODO - handle deletion of Collider *s - should gameManager or scene keep array of Collider *s?
     ecsManager.registerComponent<Collider *>();
@@ -27,14 +40,11 @@ GameManager::GameManager(){
 
     inputManager.addContext(defaultContext);
 
+    scriptSystem = ecsManager.registerSystem<ScriptSystem>();
+    ecsManager.followComponent<ScriptSystem, Script>();
+
     SceneLoader sceneLoader;
     sceneLoader.readFile("scene1copy.json", ecsManager, entities);
-
-    //createPaddles();
-    //createWalls();
-    //createBalls();
-
-
 };  
 
 void GameManager::ProcessInput(){
@@ -42,7 +52,8 @@ void GameManager::ProcessInput(){
 }
 
 void GameManager::Update(float deltaTime){
-
+    //--- TODO - which system should update first??
+    scriptSystem->Update();
     physicsSystem->Update(deltaTime);
 }
 
@@ -238,11 +249,6 @@ void GameManager::createBalls(){
         CircleCollider *ballCollider = new CircleCollider(ballTransform);
         ecsManager.addComponent<Collider *>(entities[currentIndex], ballCollider);
     }
-}
-
-void GameManager::deletePaddles(){
-    ecsManager.deleteEntity(entities[0]);
-    ecsManager.deleteEntity(entities[1]);
 }
 
 void GameManager::saveScene(){

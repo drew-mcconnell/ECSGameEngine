@@ -195,6 +195,13 @@ std::string SceneLoader::readTag(std::ifstream &sceneFile){
     return removeQuotesAndColon(text);
 }
 
+std::string SceneLoader::readScriptName(std::ifstream &sceneFile){
+    std::string text;
+
+    sceneFile >> text;
+    return removeQuotesAndColon(text);
+}
+
 void SceneLoader::parseObject(std::ifstream &sceneFile, ECSManager &ecsManager, Entity entities[]){
     
     std::string text;
@@ -252,6 +259,11 @@ void SceneLoader::parseObject(std::ifstream &sceneFile, ECSManager &ecsManager, 
             Tag tag;
             tag.tag = readTag(sceneFile);
             ecsManager.addComponent<Tag>(currentEntity, tag);
+        }
+        else if(key == "script"){
+            Script script;
+            script.name = readScriptName(sceneFile);
+            ecsManager.addComponent<Script>(currentEntity, script);
         }
         //else it's not a component, but a new entity, so create new entity, recurse, and look for components
         else{

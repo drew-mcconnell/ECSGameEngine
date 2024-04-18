@@ -7,3 +7,4 @@
 #include "BoxCollider.h"
 #include "CircleCollider.h"
 #include "Tag.h"
+#include "Script.h"

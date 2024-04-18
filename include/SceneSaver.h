@@ -15,6 +15,7 @@ class SceneSaver{
         static void writeBoxCollider(std::ofstream &sceneFile);
         static void writeCircleCollider(std::ofstream &sceneFile);
         static void writeTag(std::ofstream &sceneFile);
+        static void writeScript(std::ofstream &sceneFile);
         static void writeObject(std::ofstream &sceneFile, ECSManager &ecsManager, Entity entities[], uint8_t numEntities);
     public:
         static void writeFile(std::string file, ECSManager &ecsManager, Entity entities[], uint8_t numEntities);

@@ -14,6 +14,7 @@
 //#include "Command.h"
 #include "SceneLoader.h"
 #include "SceneSaver.h"
+#include "ScriptSystem.h"
 
 using namespace std;
 
@@ -28,11 +29,7 @@ class GameManager{
         
         std::shared_ptr<InputContext> defaultContext;
         InputManager inputManager;
-
-        /*TransformComponent transforms[maxEntities];
-        PhysicsComponent physics[maxEntities];
-        RenderComponent render[maxEntities];*/
-
+        std::shared_ptr<ScriptSystem> scriptSystem;
 
     public:
         GameManager();
@@ -40,7 +37,6 @@ class GameManager{
         void createWalls();
         void createPaddles();
         void createBalls();
-        void deletePaddles();
 
         void saveScene();
 

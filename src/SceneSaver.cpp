@@ -106,10 +106,10 @@ void SceneSaver::writeRender(std::ofstream &sceneFile, RenderComponent r){
     writeNumTabs(sceneFile, 3);
     writeKey(sceneFile, "shape");
     if(r.shape == RECT){
-        sceneFile << "RECT";
+        sceneFile << "\"RECT\"";
     }
     else{
-        sceneFile << "CIRCLE";
+        sceneFile << "\"CIRCLE\"";
     }
     sceneFile << "\n";
 
@@ -225,6 +225,20 @@ void SceneSaver::writeObject(std::ofstream &sceneFile, ECSManager &ecsManager, E
             writeKey(sceneFile, "tag");
 
             sceneFile << "\"" << t.tag << "\"\n";
+
+            needComma = true;
+        }
+        //if entity has a script
+        if(ecsManager.doesEntityHaveComponent<Script>(entity)){
+            if(needComma){
+                addEndLineComma(sceneFile);
+            }
+
+            Script s = ecsManager.getComponent<Script>(entity);
+            writeNumTabs(sceneFile, 2);
+            writeKey(sceneFile, "script");
+
+            sceneFile << "\"" << s.name << "\"\n";
 
             needComma = true;
         }

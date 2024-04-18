@@ -68,7 +68,7 @@
             "width": 15,
             "height": 100,
             "x": 27,
-            "y": 232.2
+            "y": 291.6
             },
         "rigidbody": {
             "velocityX": 0,
@@ -84,7 +84,7 @@
             "green": 255,
             "blue": 0,
             "alpha": 255,
-            "shape": RECT
+            "shape": "RECT"
             },
         "tag": "paddle1"
         },
@@ -93,7 +93,7 @@
             "width": 15,
             "height": 100,
             "x": 773,
-            "y": 296.8
+            "y": 427.401
             },
         "rigidbody": {
             "velocityX": 0,
@@ -109,7 +109,7 @@
             "green": 0,
             "blue": 255,
             "alpha": 255,
-            "shape": RECT
+            "shape": "RECT"
             },
         "tag": "paddle2"
         },
@@ -117,8 +117,8 @@
         "transform": {
             "width": 50,
             "height": 50,
-            "x": 381.599,
-            "y": 123.098
+            "x": 226.975,
+            "y": 216.585
             },
         "rigidbody": {
             "velocityX": 200,
@@ -134,8 +134,9 @@
             "green": 255,
             "blue": 255,
             "alpha": 255,
-            "shape": CIRCLE
+            "shape": "CIRCLE"
             },
-        "tag": "ball"
-        }
+        "tag": "ball",
+        "script": "src/test.lua"
+    }
 }
