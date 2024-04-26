@@ -68,7 +68,7 @@
             "width": 15,
             "height": 100,
             "x": 27,
-            "y": 294.8
+            "y": 182.399
             },
         "rigidbody": {
             "velocityX": 0,
@@ -92,7 +92,7 @@
             "width": 15,
             "height": 100,
             "x": 773,
-            "y": 269.6
+            "y": 376.8
             },
         "rigidbody": {
             "velocityX": 0,
@@ -115,23 +115,20 @@
         "transform": {
             "width": 50,
             "height": 50,
-            "x": 290.996,
-            "y": 234.445
+            "x": 475.996,
+            "y": 439.396
             },
         "rigidbody": {
-            "velocityX": 200,
-            "velocityY": -50,
+            "velocityX": -200,
+            "velocityY": 50,
             "isKinematic": false,
             "elasticity": 1,
             "mass": 1
             },
         "circleCollider": true,
         "render": {
-            "shape": "CIRCLE",
-            "red": 255,
-            "green": 255,
-            "blue": 255,
-            "alpha": 255
+            "shape": "IMAGE",
+            "fileName": "scenes/assets/ball.png"
             },
         "tag": "ball",
         "script": "src/test.lua"

@@ -87,8 +87,11 @@ void RenderComponent::circleRender(RenderComponent * r, SDL_Renderer * renderer,
 }
 
 void RenderComponent::imageRender(RenderComponent * r, SDL_Renderer * renderer, TransformComponent transform){
+    
+    //--- TODO - why when used on moving objects does the movement act like a mask?
+    // not moving the image, but moving along and revealing different parts of the image
     SDL_Rect sr = {(int)transform.x, (int)transform.y, (int)transform.width, (int)transform.height};
-    SDL_Rect dr = {(int)transform.x, (int)transform.y, (int)transform.width, (int)transform.height};
+    SDL_Rect dr = {(int)(transform.x - transform.width / 2), (int)(transform.y - transform.height / 2), (int)transform.width, (int)transform.height};
     r->mImage.render(renderer, &sr, &dr);
 }
         

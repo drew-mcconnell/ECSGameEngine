@@ -29,5 +29,5 @@ void Image::render(SDL_Renderer * renderer, SDL_Rect * sourceRect, SDL_Rect * de
         //std::cout << "Error creating texture";
     }
 
-    SDL_RenderCopy(renderer, texture, sourceRect, destinationRect);
+    SDL_RenderCopy(renderer, texture, NULL, destinationRect);
 }
