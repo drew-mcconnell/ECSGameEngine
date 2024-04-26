@@ -8,3 +8,4 @@
 #include "CircleCollider.h"
 #include "Tag.h"
 #include "Script.h"
+#include "Image.h"

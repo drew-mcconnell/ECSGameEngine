@@ -71,6 +71,11 @@
         "set": "cpp",
         "stack": "cpp",
         "string_view": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "condition_variable": "cpp",
+        "forward_list": "cpp",
+        "list": "cpp",
+        "numeric": "cpp",
+        "unordered_set": "cpp"
     }
 }

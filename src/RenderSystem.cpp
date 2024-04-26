@@ -6,13 +6,18 @@ void RenderSystem::Render(SDL_Renderer * renderer){
         auto &render = ecsManager.getComponent<RenderComponent>(entity);
 
         //--- TODO - find more efficient way to select shape - is this conditional
+        render.render(&render, renderer, transform);
+
         // still faster than a virtual function?
-        if(render.shape == RECT){
+        /*if(render.mShape == RECT){
             DrawRect(renderer, transform, render);
         }
-        else{
+        else if(render.mShape == CIRCLE){
             DrawCircle(renderer, transform, render);
         }
+        else{
+            DrawImage(renderer, transform, render);
+        }*/
 
         #ifdef DEBUG
             SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
@@ -30,13 +35,13 @@ void RenderSystem::DrawRect(SDL_Renderer * renderer, TransformComponent transfor
             (int)transform.width,
             (int)transform.height
             };
-            SDL_SetRenderDrawColor(renderer, render.color.red, render.color.green, render.color.blue, render.color.alpha);
+            SDL_SetRenderDrawColor(renderer, render.mColor.red, render.mColor.green, render.mColor.blue, render.mColor.alpha);
             SDL_RenderFillRect(renderer, &rect1);
 }
 
 void RenderSystem::DrawCircle(SDL_Renderer * renderer, TransformComponent transform, RenderComponent render)
 {
-    SDL_SetRenderDrawColor(renderer, render.color.red, render.color.green, render.color.blue, render.color.alpha);
+    SDL_SetRenderDrawColor(renderer, render.mColor.red, render.mColor.green, render.mColor.blue, render.mColor.alpha);
     
     const int32_t radius = transform.width / 2;
     const int32_t diameter = (radius * 2);
@@ -80,7 +85,7 @@ void RenderSystem::DrawCircle(SDL_Renderer * renderer, TransformComponent transf
 void RenderSystem::SDL_RenderFillCircle(SDL_Renderer * renderer, TransformComponent transform, RenderComponent render)
 {
 
-    SDL_SetRenderDrawColor(renderer, render.color.red, render.color.green, render.color.blue, render.color.alpha);
+    SDL_SetRenderDrawColor(renderer, render.mColor.red, render.mColor.green, render.mColor.blue, render.mColor.alpha);
     int x = transform.x;
     int y = transform.y;
     int radius = transform.width / 2;
@@ -124,4 +129,10 @@ void RenderSystem::SDL_RenderFillCircle(SDL_Renderer * renderer, TransformCompon
     }
 
     //return status;
+}
+
+void RenderSystem::DrawImage(SDL_Renderer * renderer, TransformComponent transform, RenderComponent render){
+    SDL_Rect sr = {(int)transform.x, (int)transform.y, (int)transform.width, (int)transform.height};
+    SDL_Rect dr = {(int)transform.x, (int)transform.y, (int)transform.width, (int)transform.height};
+    //render.image.render(renderer, &sr, &dr);
 }

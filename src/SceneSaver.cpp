@@ -86,33 +86,45 @@ void SceneSaver::writeRigidbody(std::ofstream &sceneFile, PhysicsComponent rb){
 }
 void SceneSaver::writeRender(std::ofstream &sceneFile, RenderComponent r){
     sceneFile << "{\n";
-    
-    writeNumTabs(sceneFile, 3);
-    writeKey(sceneFile, "red");
-    sceneFile << r.color.red << ",\n";
-
-    writeNumTabs(sceneFile, 3);
-    writeKey(sceneFile, "green");
-    sceneFile << r.color.green << ",\n";
-
-    writeNumTabs(sceneFile, 3);
-    writeKey(sceneFile, "blue");
-    sceneFile << r.color.blue << ",\n";
-
-    writeNumTabs(sceneFile, 3);
-    writeKey(sceneFile, "alpha");
-    sceneFile << r.color.alpha << ",\n";
 
     writeNumTabs(sceneFile, 3);
     writeKey(sceneFile, "shape");
-    if(r.shape == RECT){
-        sceneFile << "\"RECT\"";
+
+    if(r.mShape == IMAGE){
+        sceneFile << "\"IMAGE\"";
+        sceneFile << ",\n";
+
+        writeNumTabs(sceneFile, 3);
+        writeKey(sceneFile, "fileName");
+        sceneFile << "\"" << r.mImage.mFileName << "\"\n";
     }
     else{
-        sceneFile << "\"CIRCLE\"";
-    }
-    sceneFile << "\n";
+        if(r.mShape == RECT){
+            sceneFile << "\"RECT\"";
+        }
+        else if(r.mShape == CIRCLE){
+            sceneFile << "\"CIRCLE\"";
+        }
 
+        sceneFile << ",\n";
+
+        writeNumTabs(sceneFile, 3);
+        writeKey(sceneFile, "red");
+        sceneFile << r.mColor.red << ",\n";
+
+        writeNumTabs(sceneFile, 3);
+        writeKey(sceneFile, "green");
+        sceneFile << r.mColor.green << ",\n";
+
+        writeNumTabs(sceneFile, 3);
+        writeKey(sceneFile, "blue");
+        sceneFile << r.mColor.blue << ",\n";
+
+        writeNumTabs(sceneFile, 3);
+        writeKey(sceneFile, "alpha");
+        sceneFile << r.mColor.alpha << "\n";
+    }
+    
     writeNumTabs(sceneFile, 3);
     sceneFile << "}";
 }
@@ -194,7 +206,7 @@ void SceneSaver::writeObject(std::ofstream &sceneFile, ECSManager &ecsManager, E
                 writeKey(sceneFile, "circleCollider");
             }
 
-            sceneFile << "true" << "\n";
+            sceneFile << "true"; //---TODO- this is causing commas to be on the next line and messing up the loader
 
             needComma = true;
         }
@@ -224,7 +236,7 @@ void SceneSaver::writeObject(std::ofstream &sceneFile, ECSManager &ecsManager, E
             writeNumTabs(sceneFile, 2);
             writeKey(sceneFile, "tag");
 
-            sceneFile << "\"" << t.tag << "\"\n";
+            sceneFile << "\"" << t.tag << "\"";
 
             needComma = true;
         }
@@ -238,11 +250,12 @@ void SceneSaver::writeObject(std::ofstream &sceneFile, ECSManager &ecsManager, E
             writeNumTabs(sceneFile, 2);
             writeKey(sceneFile, "script");
 
-            sceneFile << "\"" << s.name << "\"\n";
+            sceneFile << "\"" << s.name << "\"";
 
             needComma = true;
         }
 
+        sceneFile << "\n";
         writeNumTabs(sceneFile, 2);
         sceneFile << "}";
 

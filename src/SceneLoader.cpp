@@ -116,47 +116,70 @@ RenderComponent SceneLoader::readRender(std::ifstream &sceneFile){
     sceneFile >> text;
     assert(text == "{");
 
-    //use loop so variables can be in any order or left out
-    while(true){
+    sceneFile >> text;
+    text = removeQuotesAndColon(text);
+    assert(text == "shape");
+    
+    std::string shape;
+    sceneFile >> shape;
+    shape = removeQuotesAndColon(shape);
+
+    if(shape == "IMAGE"){
+        std::string fileName;
         sceneFile >> text;
         text = removeQuotesAndColon(text);
+        assert(text == "fileName");
 
-        if(text.find("}") != -1){
-            break;
-        }
+        sceneFile >> fileName;
+        fileName = removeQuotesAndColon(fileName);
 
-        if(text == "red"){  
-            std::string num;
-            sceneFile >> num;
-            r.color.red = std::stof(num);
-        }
-        else if(text == "green"){
-            std::string num;
-            sceneFile >> num;
-            r.color.green = std::stof(num);
-        }
-        else if(text == "blue"){
-            std::string num;
-            sceneFile >> num;
-            r.color.blue = std::stof(num);
-        }
-        else if(text == "alpha"){
-            std::string num;
-            sceneFile >> num;
-            r.color.alpha = std::stof(num);
-        }
-        else if(text == "shape"){
-            //int shape;
-            std::string shape;
-            sceneFile >> shape;
-            shape = removeQuotesAndColon(shape);
-            //r.shape = static_cast<Shapes>(shape);
-            if(shape == "CIRCLE"){
-                r.shape = CIRCLE;
+        r = RenderComponent(Image(fileName));
+    }
+    else{
+        RGBA color;
+
+        //use loop so variables can be in any order or left out
+        while(true){
+            sceneFile >> text;
+            text = removeQuotesAndColon(text);
+
+            if(text.find("}") != -1){
+                break;
             }
-            else{
-                r.shape = RECT;
+
+            if(text == "red"){  
+                std::string num;
+                sceneFile >> num;
+                color.red = std::stof(num);
             }
+            else if(text == "green"){
+                std::string num;
+                sceneFile >> num;
+                color.green = std::stof(num);
+            }
+            else if(text == "blue"){
+                std::string num;
+                sceneFile >> num;
+                color.blue = std::stof(num);
+            }
+            else if(text == "alpha"){
+                std::string num;
+                sceneFile >> num;
+                color.alpha = std::stof(num);
+            }
+            else if(text == "shape"){
+                //int shape;
+                std::string shape;
+                sceneFile >> shape;
+                shape = removeQuotesAndColon(shape);
+                //r.shape = static_cast<Shapes>(shape);
+            }
+        }  
+        if(shape == "CIRCLE"){
+            r = RenderComponent(color, CIRCLE);
+        }
+        else{
+            r = RenderComponent(color, RECT);
         }
     }
 
@@ -196,6 +219,13 @@ std::string SceneLoader::readTag(std::ifstream &sceneFile){
 }
 
 std::string SceneLoader::readScriptName(std::ifstream &sceneFile){
+    std::string text;
+
+    sceneFile >> text;
+    return removeQuotesAndColon(text);
+}
+
+std::string SceneLoader::readImageName(std::ifstream &sceneFile){
     std::string text;
 
     sceneFile >> text;
@@ -264,6 +294,11 @@ void SceneLoader::parseObject(std::ifstream &sceneFile, ECSManager &ecsManager, 
             Script script;
             script.name = readScriptName(sceneFile);
             ecsManager.addComponent<Script>(currentEntity, script);
+        }
+        else if(key == "image"){
+            Image image;
+            image.setImage(readImageName(sceneFile));
+            ecsManager.addComponent<Image>(currentEntity, image);
         }
         //else it's not a component, but a new entity, so create new entity, recurse, and look for components
         else{

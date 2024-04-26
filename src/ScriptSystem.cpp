@@ -7,8 +7,6 @@ void ScriptSystem::Update(){
     for(auto entity : entities){
         Script script = ecsManager.getComponent<Script>(entity);
 
-        
-
         lua.script_file(script.name);
         int x = lua["f"](30);
         int y = lua["f"](5);

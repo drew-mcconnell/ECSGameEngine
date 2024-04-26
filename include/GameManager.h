@@ -1,5 +1,7 @@
 #pragma once
 #include <SDL.h>
+#include "sol/sol.hpp"
+#include <SDL_image.h>
 #include <cmath>
 #include "limits.h"
 #include "constants.h"

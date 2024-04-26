@@ -1,5 +1,4 @@
 #include "GameManager.h"
-#include "sol/sol.hpp"
 
 GameManager::GameManager(){
     ecsManager.init();
@@ -7,10 +6,10 @@ GameManager::GameManager(){
     sol::state lua;
 	lua.open_libraries(sol::lib::base);
 
-    lua.script_file("src/test.lua");
+    /*lua.script_file("src/test.lua");
     int x = lua["f"](30);
     auto myFunc = lua["f"];
-    int value = myFunc(12);
+    int value = myFunc(12);*/
 
 	//lua.script("print('bark bark bark!')");
 
@@ -58,7 +57,6 @@ void GameManager::Update(float deltaTime){
 }
 
 void GameManager::Render(SDL_Renderer * renderer){
-    
     renderSystem->Render(renderer);
 }
 
@@ -176,11 +174,11 @@ void GameManager::createPaddles(){
     ecsManager.addComponent<PhysicsComponent>(entities[currentIndex], phys1);
     
     RenderComponent rend1;
-    rend1.color.red = 0;
-    rend1.color.green = 255;
-    rend1.color.blue = 0;
-    rend1.color.alpha = 255;
-    rend1.shape = RECT;
+    rend1.mColor.red = 0;
+    rend1.mColor.green = 255;
+    rend1.mColor.blue = 0;
+    rend1.mColor.alpha = 255;
+    rend1.mShape = RECT;
     ecsManager.addComponent<RenderComponent>(entities[currentIndex], rend1);
 
     BoxCollider *box1 = new BoxCollider(t1);
@@ -205,11 +203,11 @@ void GameManager::createPaddles(){
     phys2.mass = INFINITY;//FLT_MAX;
     ecsManager.addComponent<PhysicsComponent>(entities[currentIndex], phys2);
     RenderComponent rend2;
-    rend2.color.red = 0;
-    rend2.color.green = 0;
-    rend2.color.blue = 255;
-    rend2.color.alpha = 255;
-    rend2.shape = RECT;
+    rend2.mColor.red = 0;
+    rend2.mColor.green = 0;
+    rend2.mColor.blue = 255;
+    rend2.mColor.alpha = 255;
+    rend2.mShape = RECT;
     ecsManager.addComponent<RenderComponent>(entities[currentIndex], rend2);
     
     BoxCollider *box2 = new BoxCollider(t2);
@@ -239,11 +237,11 @@ void GameManager::createBalls(){
         ecsManager.addComponent<PhysicsComponent>(entities[currentIndex], ballPhysics);
 
         RenderComponent ballRender;
-        ballRender.color.red = 255;
-        ballRender.color.green = 255;
-        ballRender.color.blue = 255;
-        ballRender.color.alpha = 255;
-        ballRender.shape = CIRCLE;
+        ballRender.mColor.red = 255;
+        ballRender.mColor.green = 255;
+        ballRender.mColor.blue = 255;
+        ballRender.mColor.alpha = 255;
+        ballRender.mShape = CIRCLE;
         ecsManager.addComponent<RenderComponent>(entities[currentIndex], ballRender);
 
         CircleCollider *ballCollider = new CircleCollider(ballTransform);

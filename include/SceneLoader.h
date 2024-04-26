@@ -16,6 +16,7 @@ class SceneLoader{
         static bool readCircleCollider(std::ifstream &sceneFile);
         static std::string readTag(std::ifstream &sceneFile);
         static std::string readScriptName(std::ifstream &sceneFile);
+        static std::string readImageName(std::ifstream &sceneFile);
         static void parseObject(std::ifstream &sceneFile, ECSManager &ecsManager, Entity entities[]);
     public:
         static void readFile(std::string file, ECSManager &ecsManager, Entity entities[]);

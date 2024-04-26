@@ -1,5 +1,6 @@
 #include <iostream>
 #include <SDL.h>
+#include <SDL_image.h>
 #include "GameManager.h"
 #include "ECSManager.h"
 
@@ -40,14 +41,21 @@ bool initializeWindow(SDL_Window **window, SDL_Renderer **renderer)
         return false;
     }
 
+    //create renderer
     *renderer = SDL_CreateRenderer(
         *window,
         -1,
-        0
+        SDL_RENDERER_ACCELERATED
     );
 
     if(!*renderer){
         cout << "Renderer could not be initialized" << SDL_GetError();
+        return false;
+    }
+
+    //initialize SDL_image
+    if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) == 0) {
+        std::cout << "Error SDL2_image Initialization";
         return false;
     }
     
@@ -61,6 +69,7 @@ void destroyWindow(SDL_Window *window, SDL_Renderer *renderer)
     //destroy objects in reverse order they were created in
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    IMG_Quit();
     SDL_Quit();
 }
 
@@ -134,17 +143,12 @@ void render(SDL_Renderer *renderer)
 
     gameManager.Render(renderer);
 
-
     SDL_RenderPresent(renderer); //swap the "front" buffer and "back" buffer to display everything at once
     SDL_PumpEvents();
 }
 
 void setup(SDL_Renderer *renderer)
 {
-    //-------- TODO: setup Scene system ------
-
-    //gameManager = GameManager();
-
     updateLastFrameTime();
     
     //render starting frame before processing input and updating
@@ -157,8 +161,6 @@ int main(int argc, char * argv[])
 
     SDL_Window * window = nullptr;
     SDL_Renderer * renderer = nullptr;
-
-    // ------------ TODO ----------
 
     bool isRunning = initializeWindow(&window, &renderer);
     bool paused = false;
@@ -176,8 +178,6 @@ int main(int argc, char * argv[])
             render(renderer);
         }
     }
-
-    //SDL_Delay(3000);
 
     destroyWindow(window, renderer);
 
