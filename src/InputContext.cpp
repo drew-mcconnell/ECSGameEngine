@@ -16,7 +16,6 @@ Entity InputContext::getEntityFromTag(std::string tag) const{
 InputContext::InputContext(){
 
     //setup default context
-    // ----- TODO - create four Command objects to use here
     // ----- W Command for up
     // ----- S Command for down
     // ----- Empty command for A and D

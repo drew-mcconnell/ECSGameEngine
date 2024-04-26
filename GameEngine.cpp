@@ -6,7 +6,7 @@
 
 using namespace std;
 
-const int frameTargetTime = 30;
+const int frameTargetTime = 16;//30;
 int lastFrameTime = 0;
 
 GameManager gameManager;

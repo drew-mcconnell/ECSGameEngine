@@ -15,4 +15,5 @@ class Image{
 
     private:
         SDL_Surface * surface;
+        SDL_Texture * texture;
 };

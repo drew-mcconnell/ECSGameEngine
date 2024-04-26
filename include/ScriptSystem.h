@@ -9,9 +9,11 @@ extern ECSManager ecsManager;
 
 class ScriptSystem : public System{
     private:
-
+        sol::state lua;
 
     public:
+        ScriptSystem();
+        void Start();
         void Update();
 
 };

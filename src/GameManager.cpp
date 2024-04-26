@@ -3,16 +3,6 @@
 GameManager::GameManager(){
     ecsManager.init();
 
-    sol::state lua;
-	lua.open_libraries(sol::lib::base);
-
-    /*lua.script_file("src/test.lua");
-    int x = lua["f"](30);
-    auto myFunc = lua["f"];
-    int value = myFunc(12);*/
-
-	//lua.script("print('bark bark bark!')");
-
     //entities = new Entity[maxEntities];
     ecsManager.registerComponent<TransformComponent>();
     ecsManager.registerComponent<PhysicsComponent>();
@@ -43,7 +33,9 @@ GameManager::GameManager(){
     ecsManager.followComponent<ScriptSystem, Script>();
 
     SceneLoader sceneLoader;
-    sceneLoader.readFile("scene1copy.json", ecsManager, entities);
+    sceneLoader.readFile("scene1.json", ecsManager, entities);
+
+    scriptSystem->Start();
 };  
 
 void GameManager::ProcessInput(){

@@ -242,6 +242,8 @@ void SceneLoader::parseObject(std::ifstream &sceneFile, ECSManager &ecsManager, 
     }
     assert(text == "{");
 
+    //--- TODO - move all of this into the components. Have each component own writing itself out
+
     // while there is text in the file and text isn't ending an object with a brace
     // >> delineates by whitespace
     while(sceneFile >> text && text.find("}") == -1) {
@@ -311,7 +313,7 @@ void SceneLoader::parseObject(std::ifstream &sceneFile, ECSManager &ecsManager, 
 
 void SceneLoader::readFile(std::string file, ECSManager &ecsManager, Entity entities[]){
     
-    std::string fileDirectory = "scenes/" + file;
+    std::string fileDirectory = "assets/scenes/" + file;
     std::ifstream sceneFile(fileDirectory);
 
     if(!sceneFile){
