@@ -132,5 +132,8 @@
       "circleCollider": true,
       "tag": "ball",
       "script": "assets/scripts/ball.lua"
+    },
+    "gameManager": {
+        "script": "assets/scripts/main.lua"
     }
   }
